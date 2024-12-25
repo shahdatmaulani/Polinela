@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvNamaDonasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tvDeskripsiDonasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tvStatusDonasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvTargetDonasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/tvTerkumpulDonasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/blue" />
+
+    <ImageView
+        android:id="@+id/imageViewDonasi"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Donasi Image" />
+
+    <!-- EditText untuk memasukkan jumlah donasi -->
+    <EditText
+        android:id="@+id/etJumlahDonasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan jumlah donasi"
+        android:inputType="number"
+        android:layout_marginTop="16dp"
+        android:padding="13dp"
+        android:background="@drawable/edittext_background"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+
+        />
+
+    <Button
+        android:id="@+id/btnDonasiSekarang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Donasi Sekarang"
+        android:backgroundTint="@color/Sherpa_blue"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"
+        android:padding="12dp" />
+</LinearLayout>

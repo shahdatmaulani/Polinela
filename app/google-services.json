@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "286562216166",
+    "firebase_url": "https://polinelapeduli-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "polinelapeduli",
+    "storage_bucket": "polinelapeduli.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286562216166:android:90fda98becd1a67f947327",
+        "android_client_info": {
+          "package_name": "com.example.polinelapeduli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286562216166-n123ct588ugjd7vtu3dqa0ifaltk4q8d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.polinelapeduli",
+            "certificate_hash": "81fa7f7585a89c4b019780007ca2f9f9d178f02e"
+          }
+        },
+        {
+          "client_id": "286562216166-3k9nu47p64ddac2a8rslt1tvaj1b4b9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX1b6nc992Byh0RPji6yP0B0ETk-qio6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286562216166-3k9nu47p64ddac2a8rslt1tvaj1b4b9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
