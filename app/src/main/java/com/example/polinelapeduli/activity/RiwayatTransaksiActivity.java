@@ -1,7 +1,6 @@
 package com.example.polinelapeduli.activity;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,19 +48,21 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
         User user = userRepository.getUserByEmail(userLogin.getEmail());
         if (user != null) {
             int userId = user.getUserId();
+            // Load the donation history for the user
             loadRiwayatDonasi(userId);
+
+            // Set custom adapter for ListView
+            RiwayatDonasiAdapter adapter = new RiwayatDonasiAdapter(this, paymentRepository.getPaymentsByUserId(userId));
+            listViewRiwayatDonasi.setAdapter(adapter);
+
+            // Set listener for item click
+            listViewRiwayatDonasi.setOnItemClickListener((parent, view, position, id) -> {
+                HistoryTransaction selectedTransaction = (HistoryTransaction) parent.getItemAtPosition(position);
+                Toast.makeText(RiwayatTransaksiActivity.this, "Selected: " + selectedTransaction.getDonationName(), Toast.LENGTH_SHORT).show();
+            });
         }
-
-        // Set adapter untuk ListView
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, riwayatDonasiList);
-        listViewRiwayatDonasi.setAdapter(adapter);
-
-        // Set listener untuk item click
-        listViewRiwayatDonasi.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedDonasi = riwayatDonasiList.get(position);
-            Toast.makeText(RiwayatTransaksiActivity.this, "Selected: " + selectedDonasi, Toast.LENGTH_SHORT).show();
-        });
     }
+
 
     private void loadRiwayatDonasi(int userId) {
         riwayatDonasiList.clear();

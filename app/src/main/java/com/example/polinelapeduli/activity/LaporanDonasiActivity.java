@@ -1,13 +1,11 @@
 package com.example.polinelapeduli.activity;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.polinelapeduli.R;
-import com.example.polinelapeduli.model.Donation;
 import com.example.polinelapeduli.model.dto.ReportDonation;
 import com.example.polinelapeduli.repository.DonationRepository;
 
@@ -42,23 +40,9 @@ public class LaporanDonasiActivity extends AppCompatActivity {
         if (donations.isEmpty()) {
             laporanDonasiList.add("Belum ada laporan donasi.");
         } else {
-            for (ReportDonation donation : donations) {
-                // Corrected: using the getter methods from ReportDonation
-                String donasiInfo = "Donasi " + donation.getDonationName() + " - " +
-                        "Kategori: " + donation.getCategory() + " - " +
-                        "Jumlah Donasi: " + formatCurrency(donation.getAmount()) + " - " +
-                        "Target: " + formatCurrency(donation.getTargetAmount());
-                laporanDonasiList.add(donasiInfo);
-            }
+            // Using the custom adapter
+            LaporanDonasiAdapter adapter = new LaporanDonasiAdapter(this, donations);
+            listViewLaporanDonasi.setAdapter(adapter);
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, laporanDonasiList);
-        listViewLaporanDonasi.setAdapter(adapter);
-    }
-
-
-    private String formatCurrency(int amount) {
-        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        return format.format(amount);
     }
 }
