@@ -42,7 +42,7 @@ public class EditDonasiActivity extends AppCompatActivity {
     private EditText etNamaDonasi, etDeskripsiDonasi, etTargetDonasi;
     private Spinner spinnerStatusDonation;
     private ImageView imageViewDonasi;
-    private TextView tvStatusGambar, tvKategori;
+    private TextView tvStatusGambar;
     private DonationRepository donationRepository;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
 
