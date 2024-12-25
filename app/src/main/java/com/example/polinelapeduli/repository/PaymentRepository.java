@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.polinelapeduli.model.Payment;
+import com.example.polinelapeduli.model.dto.HistoryTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,5 +94,48 @@ public class PaymentRepository {
             Log.e(TAG, "Error fetching payments for transaction ID: " + transactionId, e);
         }
         return paymentList;
+    }
+
+    public List<HistoryTransaction> getPaymentsByUserId(int userId) {
+        List<HistoryTransaction> historyTransactions = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String query = "SELECT " +
+                "p.payment_id, p.amount AS payment_amount, p.method, p.paid_at, " +
+                "t.transaction_id, t.amount AS transaction_amount, t.created_at, " +
+                "d.donation_id, d.name AS donation_name, " +
+                "c.category_id, c.name AS category_name " +
+                "FROM payments p " +
+                "JOIN transactions t ON p.transaction_id = t.transaction_id " +
+                "JOIN donations d ON t.donation_id = d.donation_id " +
+                "JOIN categories c ON d.category_id = c.category_id " +
+                "WHERE t.user_id = ?";
+
+        try (Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)})) {
+            if (cursor.moveToFirst()) {
+                do {
+                    HistoryTransaction historyTransaction = new HistoryTransaction();
+                    historyTransaction.setPaymentId(cursor.getInt(cursor.getColumnIndexOrThrow("payment_id")));
+                    historyTransaction.setPaymentAmount(cursor.getDouble(cursor.getColumnIndexOrThrow("payment_amount")));
+                    historyTransaction.setMethod(cursor.getString(cursor.getColumnIndexOrThrow("method")));
+                    historyTransaction.setPaidAt(cursor.getString(cursor.getColumnIndexOrThrow("paid_at")));
+                    historyTransaction.setTransactionId(cursor.getInt(cursor.getColumnIndexOrThrow("transaction_id")));
+                    historyTransaction.setTransactionAmount(cursor.getDouble(cursor.getColumnIndexOrThrow("transaction_amount")));
+                    historyTransaction.setCreatedAt(cursor.getString(cursor.getColumnIndexOrThrow("created_at")));
+                    historyTransaction.setDonationId(cursor.getInt(cursor.getColumnIndexOrThrow("donation_id")));
+                    historyTransaction.setDonationName(cursor.getString(cursor.getColumnIndexOrThrow("donation_name")));
+                    historyTransaction.setCategoryId(cursor.getInt(cursor.getColumnIndexOrThrow("category_id")));
+                    historyTransaction.setCategoryName(cursor.getString(cursor.getColumnIndexOrThrow("category_name")));
+
+                    historyTransactions.add(historyTransaction);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("PaymentRepository", "Error fetching history transactions by user ID", e);
+        } finally {
+            db.close();
+        }
+
+        return historyTransactions;
     }
 }

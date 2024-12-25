@@ -8,13 +8,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.polinelapeduli.R;
+import com.example.polinelapeduli.model.User;
+import com.example.polinelapeduli.model.dto.HistoryTransaction;
+import com.example.polinelapeduli.repository.PaymentRepository;
+import com.example.polinelapeduli.repository.UserRepository;
+import com.example.polinelapeduli.utils.UserValidator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RiwayatTransaksiActivity extends AppCompatActivity {
 
     private ListView listViewRiwayatDonasi;
     private ArrayList<String> riwayatDonasiList;
+    private PaymentRepository paymentRepository;
+    private UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +32,25 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
         listViewRiwayatDonasi = findViewById(R.id.listViewRiwayatDonasi);
         riwayatDonasiList = new ArrayList<>();
 
-        loadRiwayatDonasiDummy();
+        // Initialize userRepository
+        userRepository = new UserRepository(this);
+
+        User userLogin = UserValidator.validateUser(this);
+
+        // Inisialisasi paymentRepository
+        paymentRepository = new PaymentRepository(this);
+
+        if (userLogin == null) {
+            finish();
+            return;
+        }
+
+        // Get user by email
+        User user = userRepository.getUserByEmail(userLogin.getEmail());
+        if (user != null) {
+            int userId = user.getUserId();
+            loadRiwayatDonasi(userId);
+        }
 
         // Set adapter untuk ListView
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, riwayatDonasiList);
@@ -34,15 +60,24 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
         listViewRiwayatDonasi.setOnItemClickListener((parent, view, position, id) -> {
             String selectedDonasi = riwayatDonasiList.get(position);
             Toast.makeText(RiwayatTransaksiActivity.this, "Selected: " + selectedDonasi, Toast.LENGTH_SHORT).show();
-            // Anda dapat menambahkan aksi lainnya di sini, seperti menampilkan detail donasi
         });
     }
 
-    private void loadRiwayatDonasiDummy() {
-        // Data dummy untuk simulasi tampilan riwayat donasi
+    private void loadRiwayatDonasi(int userId) {
         riwayatDonasiList.clear();
-        riwayatDonasiList.add("Donasi Kesehatan A - Jumlah Donasi: Rp 750.000");
-        riwayatDonasiList.add("Donasi Kemanusiaan B - Jumlah Donasi: Rp 1.250.000");
-        riwayatDonasiList.add("Donasi Pendidikan C - Jumlah Donasi: Rp 500.000");
+        List<HistoryTransaction> payments = paymentRepository.getPaymentsByUserId(userId);
+
+        if (payments.isEmpty()) {
+            riwayatDonasiList.add("Belum ada riwayat donasi untuk pengguna ini.");
+        } else {
+            for (HistoryTransaction payment : payments) {
+                String donasiInfo = " | Nama Donasi: " + payment.getDonationName()
+                        + " | Kategori: " + payment.getCategoryName()
+                        + " | Jumlah: Rp " + payment.getPaymentAmount()
+                        + " | Metode: " + payment.getMethod()
+                        + " | Tanggal: " + payment.getPaidAt();
+                riwayatDonasiList.add(donasiInfo);
+            }
+        }
     }
 }
