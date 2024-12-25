@@ -61,7 +61,7 @@ public class KemanusiaanActivity extends AppCompatActivity {
 
     private void loadDonationsByCategory() {
         donationList.clear();
-        donationList.addAll(donationRepository.getAllDonationsWithCategory("Kemanusiaan"));
+        donationList.addAll(donationRepository.getAllDonationDetails("Kemanusiaan"));
 
         donasiAdapter = new DonasiAdapter(this, donationList, userRole, userId);
         listView.setAdapter(donasiAdapter);

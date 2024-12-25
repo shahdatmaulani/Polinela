@@ -14,10 +14,7 @@ import com.example.polinelapeduli.R;
 import com.example.polinelapeduli.model.Donation;
 import com.example.polinelapeduli.model.User;
 import com.example.polinelapeduli.repository.DonationRepository;
-import com.example.polinelapeduli.repository.UserRepository;
 import com.example.polinelapeduli.utils.UserValidator;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -65,7 +62,7 @@ public class PendidikanActivity extends AppCompatActivity {
 
     private void loadDonationsByCategory() {
         donationList.clear();
-        donationList.addAll(donationRepository.getAllDonationsWithCategory("Pendidikan"));
+        donationList.addAll(donationRepository.getAllDonationDetails("Pendidikan"));
 
         donasiAdapter = new DonasiAdapter(this, donationList, userRole, userId);
         listView.setAdapter(donasiAdapter);

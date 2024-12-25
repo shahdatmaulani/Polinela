@@ -12,9 +12,7 @@ import com.example.polinelapeduli.utils.CurrentTime;
 import com.example.polinelapeduli.utils.Enum.EStatus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DonationRepository {
 
@@ -106,7 +104,7 @@ public class DonationRepository {
                 "LEFT JOIN " + DatabaseHelper.TABLE_TRANSACTIONS + " t " +
                 "ON d." + DatabaseHelper.COLUMN_DONATION_ID + " = t." + DatabaseHelper.COLUMN_DONATION_ID + " " +
                 "WHERE c." + DatabaseHelper.COLUMN_CATEGORY_NAME + " = ? " +
-                "AND d." + DatabaseHelper.COLUMN_IS_ACTIVE + " = 1 " + // Menambahkan filter isActive = 1
+                "AND d." + DatabaseHelper.COLUMN_IS_ACTIVE + " = 1 " +
                 "GROUP BY d." + DatabaseHelper.COLUMN_DONATION_ID + ", " +
                 "d." + DatabaseHelper.COLUMN_NAME + ", " +
                 "d." + DatabaseHelper.COLUMN_DESCRIPTION + ", " +
@@ -138,6 +136,15 @@ public class DonationRepository {
                         cursor.getString(cursor.getColumnIndexOrThrow("donationUpdatedAt")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("totalCollected"))
                 );
+                Log.d(TAG, "Donation: " +
+                        "\nID: " + donation.getDonationId() +
+                        "\nName: " + donation.getName() +
+                        "\nDescription: " + donation.getDescription() +
+                        "\nCategory: " + donation.getCategoryName() +
+                        "\nTarget: " + donation.getTarget() +
+                        "\nStatus: " + donation.getStatus() +
+                        "\nTotal Collected: " + donation.getTotalCollected()
+                );
                 donations.add(donation);
             }
         } catch (Exception e) {
@@ -146,6 +153,7 @@ public class DonationRepository {
 
         return donations;
     }
+
 
 
 
