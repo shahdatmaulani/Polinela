@@ -189,6 +189,8 @@ public class DonasiAdapter extends ArrayAdapter<Donation> {
     private boolean handleLongClick(Donation donation) {
         if ("ADMIN".equals(userRole)) {
             showAdminOptionsDialog(donation);
+        } else if("DITUTUP".equals(donation.getStatus().toString())){
+            Toast.makeText(context, "Donasi Telah Ditutup", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Ayo Donasi Sekarang dengan cara klik tombol Donasi Sekarang", Toast.LENGTH_SHORT).show();
         }
