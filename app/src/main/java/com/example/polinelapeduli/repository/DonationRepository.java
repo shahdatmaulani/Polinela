@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.polinelapeduli.model.Donation;
+import com.example.polinelapeduli.model.dto.ReportDonation;
 import com.example.polinelapeduli.utils.CurrentTime;
 import com.example.polinelapeduli.utils.Enum.EStatus;
 
@@ -283,6 +284,54 @@ public class DonationRepository {
                 cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_UPDATED_AT))
         );
     }
+    /**
+     * Retrieves all donations for a report, including category, total collected amount, and other details.
+     *
+     * @return A list of donations with all relevant report details.
+     */
+    public List<ReportDonation> getAllReportDonations() {
+        List<ReportDonation> donations = new ArrayList<>();
+        String query = "SELECT d." + DatabaseHelper.COLUMN_NAME + " AS nama_donasi, " +
+                "c." + DatabaseHelper.COLUMN_NAME + " AS nama_kategori, " +
+                "IFNULL(SUM(t." + DatabaseHelper.COLUMN_AMOUNT + "), 0) AS jumlah_donasi, " +
+                "d." + DatabaseHelper.COLUMN_TARGET + " AS target_terkumpul " +
+                "FROM " + DatabaseHelper.TABLE_DONATIONS + " d " +
+                "LEFT JOIN " + DatabaseHelper.TABLE_TRANSACTIONS + " t " +
+                "ON d." + DatabaseHelper.COLUMN_DONATION_ID + " = t." + DatabaseHelper.COLUMN_DONATION_ID + " " +
+                "LEFT JOIN " + DatabaseHelper.TABLE_CATEGORIES + " c " +
+                "ON d." + DatabaseHelper.COLUMN_CATEGORY_ID + " = c." + DatabaseHelper.COLUMN_CATEGORY_ID + " " +
+                "GROUP BY d." + DatabaseHelper.COLUMN_DONATION_ID;
+
+        try (SQLiteDatabase database = dbHelper.getReadableDatabase();
+             Cursor cursor = database.rawQuery(query, null)) {
+
+            while (cursor.moveToNext()) {
+                // Corrected line: instantiating ReportDonation, not Donation
+                ReportDonation donation = new ReportDonation(
+                        cursor.getString(cursor.getColumnIndexOrThrow("nama_donasi")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("nama_kategori")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("jumlah_donasi")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("target_terkumpul"))
+                );
+
+                // Log for debugging (optional)
+                Log.d(TAG, "Donation Report: " +
+                        "\nName: " + donation.getDonationName() +
+                        "\nCategory: " + donation.getCategory() +
+                        "\nTotal Collected: " + donation.getAmount() +
+                        "\nTarget: " + donation.getTargetAmount()
+                );
+
+                donations.add(donation);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error fetching all donations for report: ", e);
+        }
+
+        return donations;
+    }
+
+
 
     /**
      * Maps a Cursor to a Donation object with category name.
