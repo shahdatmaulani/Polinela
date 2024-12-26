@@ -11,17 +11,11 @@ import com.example.polinelapeduli.model.User;
 import com.example.polinelapeduli.model.dto.HistoryTransaction;
 import com.example.polinelapeduli.repository.PaymentRepository;
 import com.example.polinelapeduli.repository.UserRepository;
-import com.example.polinelapeduli.utils.CurrencyFormatter;
 import com.example.polinelapeduli.utils.UserValidator;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
 public class RiwayatTransaksiActivity extends AppCompatActivity {
-
-    private ArrayList<String> riwayatDonasiList;
-    private PaymentRepository paymentRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +23,15 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_riwayat_transaksi);
 
         ListView listViewRiwayatDonasi = findViewById(R.id.listViewRiwayatDonasi);
-        riwayatDonasiList = new ArrayList<>();
 
         // Initialize userRepository
         UserRepository userRepository = new UserRepository(this);
 
+        // Validate logged-in user
         User userLogin = UserValidator.validateUser(this);
 
-        // Inisialisasi paymentRepository
-        paymentRepository = new PaymentRepository(this);
+        // Initialize paymentRepository
+        PaymentRepository paymentRepository = new PaymentRepository(this);
 
         if (userLogin == null) {
             finish();
@@ -48,11 +42,12 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
         User user = userRepository.getUserByEmail(userLogin.getEmail());
         if (user != null) {
             int userId = user.getUserId();
-            // Load the donation history for the user
-            loadRiwayatDonasi(userId);
+
+            // Load donation history
+            List<HistoryTransaction> payments = paymentRepository.getPaymentsByUserId(userId);
 
             // Set custom adapter for ListView
-            RiwayatDonasiAdapter adapter = new RiwayatDonasiAdapter(this, paymentRepository.getPaymentsByUserId(userId));
+            RiwayatDonasiAdapter adapter = new RiwayatDonasiAdapter(this, payments);
             listViewRiwayatDonasi.setAdapter(adapter);
 
             // Set listener for item click
@@ -62,24 +57,4 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
             });
         }
     }
-
-
-    private void loadRiwayatDonasi(int userId) {
-        riwayatDonasiList.clear();
-        List<HistoryTransaction> payments = paymentRepository.getPaymentsByUserId(userId);
-
-        if (payments.isEmpty()) {
-            riwayatDonasiList.add("Belum ada riwayat donasi untuk pengguna ini.");
-        } else {
-            for (HistoryTransaction payment : payments) {
-                String donasiInfo = " | Nama Donasi: " + payment.getDonationName()
-                        + " | Kategori: " + payment.getCategoryName()
-                        + " | Jumlah: " + CurrencyFormatter.formatCurrency(payment.getPaymentAmount())
-                        + " | Metode: " + payment.getMethod()
-                        + " | Tanggal: " + payment.getPaidAt();
-                riwayatDonasiList.add(donasiInfo);
-            }
-        }
-    }
-
 }

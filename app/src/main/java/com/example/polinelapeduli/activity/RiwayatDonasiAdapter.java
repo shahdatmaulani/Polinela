@@ -7,24 +7,26 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.polinelapeduli.R;
 import com.example.polinelapeduli.model.dto.HistoryTransaction;
+import com.example.polinelapeduli.utils.CurrencyFormatter;
 
 import java.util.List;
 
 public class RiwayatDonasiAdapter extends ArrayAdapter<HistoryTransaction> {
 
-    private Context context;
-    private List<HistoryTransaction> transactions;
+    private final Context context;
 
     public RiwayatDonasiAdapter(Context context, List<HistoryTransaction> transactions) {
         super(context, 0, transactions);
         this.context = context;
-        this.transactions = transactions;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item_riwayat_transaksi, parent, false);
         }
@@ -35,9 +37,13 @@ public class RiwayatDonasiAdapter extends ArrayAdapter<HistoryTransaction> {
         TextView tvDonasiDetails = convertView.findViewById(R.id.tv_donasi_details);
         TextView tvDonasiAmount = convertView.findViewById(R.id.tv_donasi_amount);
 
+        assert transaction != null;
         tvDonasiName.setText(transaction.getDonationName());
-        tvDonasiDetails.setText("Kategori: " + transaction.getCategoryName() + " | Metode: " + transaction.getMethod() + " | Tanggal: " + transaction.getPaidAt());
-        tvDonasiAmount.setText("Rp " + transaction.getPaymentAmount());
+        tvDonasiDetails.setText(String.format("Kategori: %s | Metode: %s | Tanggal: %s",
+                transaction.getCategoryName(),
+                transaction.getMethod(),
+                transaction.getPaidAt()));
+        tvDonasiAmount.setText(CurrencyFormatter.formatCurrency(transaction.getPaymentAmount()));
 
         return convertView;
     }
