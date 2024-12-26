@@ -9,10 +9,8 @@ import com.example.polinelapeduli.R;
 import com.example.polinelapeduli.model.dto.ReportDonation;
 import com.example.polinelapeduli.repository.DonationRepository;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class LaporanDonasiActivity extends AppCompatActivity {
 

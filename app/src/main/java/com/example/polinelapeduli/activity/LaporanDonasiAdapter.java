@@ -7,20 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.polinelapeduli.R;
 import com.example.polinelapeduli.model.dto.ReportDonation;
+import com.example.polinelapeduli.utils.CurrencyFormatter;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class LaporanDonasiAdapter extends ArrayAdapter<ReportDonation> {
     public LaporanDonasiAdapter(Context context, List<ReportDonation> donations) {
         super(context, 0, donations);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_donation, parent, false);
         }
@@ -32,16 +34,12 @@ public class LaporanDonasiAdapter extends ArrayAdapter<ReportDonation> {
         TextView donationAmount = convertView.findViewById(R.id.donationAmount);
         TextView targetAmount = convertView.findViewById(R.id.targetAmount);
 
+        assert donation != null;
         donationName.setText(donation.getDonationName());
         category.setText(donation.getCategory());
-        donationAmount.setText(formatCurrency(donation.getAmount()));
-        targetAmount.setText(formatCurrency(donation.getTargetAmount()));
+        donationAmount.setText(CurrencyFormatter.formatCurrency(donation.getAmount()));
+        targetAmount.setText(CurrencyFormatter.formatCurrency(donation.getTargetAmount()));
 
         return convertView;
-    }
-
-    private String formatCurrency(double amount) {
-        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        return format.format(amount);
     }
 }

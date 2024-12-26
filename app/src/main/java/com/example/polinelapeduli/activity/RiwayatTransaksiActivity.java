@@ -11,28 +11,28 @@ import com.example.polinelapeduli.model.User;
 import com.example.polinelapeduli.model.dto.HistoryTransaction;
 import com.example.polinelapeduli.repository.PaymentRepository;
 import com.example.polinelapeduli.repository.UserRepository;
+import com.example.polinelapeduli.utils.CurrencyFormatter;
 import com.example.polinelapeduli.utils.UserValidator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class RiwayatTransaksiActivity extends AppCompatActivity {
 
-    private ListView listViewRiwayatDonasi;
     private ArrayList<String> riwayatDonasiList;
     private PaymentRepository paymentRepository;
-    private UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riwayat_transaksi);
 
-        listViewRiwayatDonasi = findViewById(R.id.listViewRiwayatDonasi);
+        ListView listViewRiwayatDonasi = findViewById(R.id.listViewRiwayatDonasi);
         riwayatDonasiList = new ArrayList<>();
 
         // Initialize userRepository
-        userRepository = new UserRepository(this);
+        UserRepository userRepository = new UserRepository(this);
 
         User userLogin = UserValidator.validateUser(this);
 
@@ -74,11 +74,12 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
             for (HistoryTransaction payment : payments) {
                 String donasiInfo = " | Nama Donasi: " + payment.getDonationName()
                         + " | Kategori: " + payment.getCategoryName()
-                        + " | Jumlah: Rp " + payment.getPaymentAmount()
+                        + " | Jumlah: " + CurrencyFormatter.formatCurrency(payment.getPaymentAmount())
                         + " | Metode: " + payment.getMethod()
                         + " | Tanggal: " + payment.getPaidAt();
                 riwayatDonasiList.add(donasiInfo);
             }
         }
     }
+
 }

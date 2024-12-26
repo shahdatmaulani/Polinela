@@ -25,12 +25,13 @@ import com.example.polinelapeduli.model.Transaction;
 import com.example.polinelapeduli.repository.DonationRepository;
 import com.example.polinelapeduli.repository.PaymentRepository;
 import com.example.polinelapeduli.repository.TransactionRepository;
+import com.example.polinelapeduli.utils.CurrencyFormatter;
 import com.example.polinelapeduli.utils.CurrentTime;
 import com.example.polinelapeduli.utils.InputValidator;
 
-import java.text.NumberFormat;
+
 import java.util.ArrayList;
-import java.util.Locale;
+
 
 public class DonasiAdapter extends ArrayAdapter<Donation> {
 
@@ -82,8 +83,8 @@ public class DonasiAdapter extends ArrayAdapter<Donation> {
             tvNamaDonasi.setText(donation.getName());
             tvDeskripsiDonasi.setText(donation.getDescription());
             tvStatusDonasi.setText(String.format("Status: %s", donation.getStatus().toString()));
-            tvTargetDonasi.setText(String.format("Target: %s", formatCurrency(donation.getTarget())));
-            tvTerkumpulDonasi.setText(String.format("Terkumpul: %s", formatCurrency(donation.getTotalCollected())));
+            tvTargetDonasi.setText(String.format("Target: %s", CurrencyFormatter.formatCurrency(donation.getTarget())));
+            tvTerkumpulDonasi.setText(String.format("Terkumpul: %s", CurrencyFormatter.formatCurrency(donation.getTotalCollected())));
 
             Glide.with(context)
                     .load(donation.getImage())
@@ -226,10 +227,5 @@ public class DonasiAdapter extends ArrayAdapter<Donation> {
         } else {
             Toast.makeText(context, "Gagal menghapus donasi.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private String formatCurrency(int amount) {
-        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        return format.format(amount);
     }
 }
