@@ -7,8 +7,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.polinelapeduli.R;
+import com.example.polinelapeduli.model.Payment;
 import com.example.polinelapeduli.model.User;
-import com.example.polinelapeduli.model.dto.HistoryTransaction;
 import com.example.polinelapeduli.repository.PaymentRepository;
 import com.example.polinelapeduli.repository.UserRepository;
 import com.example.polinelapeduli.utils.UserValidator;
@@ -44,7 +44,7 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
             int userId = user.getUserId();
 
             // Load donation history
-            List<HistoryTransaction> payments = paymentRepository.getPaymentsByUserId(userId);
+            List<Payment> payments = paymentRepository.getPaymentsByUserId(userId);
 
             // Set custom adapter for ListView
             RiwayatDonasiAdapter adapter = new RiwayatDonasiAdapter(this, payments);
@@ -52,7 +52,7 @@ public class RiwayatTransaksiActivity extends AppCompatActivity {
 
             // Set listener for item click
             listViewRiwayatDonasi.setOnItemClickListener((parent, view, position, id) -> {
-                HistoryTransaction selectedTransaction = (HistoryTransaction) parent.getItemAtPosition(position);
+                Payment selectedTransaction = (Payment) parent.getItemAtPosition(position);
                 Toast.makeText(RiwayatTransaksiActivity.this, "Selected: " + selectedTransaction.getDonationName(), Toast.LENGTH_SHORT).show();
             });
         }

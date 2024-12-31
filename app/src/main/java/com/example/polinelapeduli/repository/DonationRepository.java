@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.polinelapeduli.model.Donation;
-import com.example.polinelapeduli.model.dto.ReportDonation;
 import com.example.polinelapeduli.utils.CurrentTime;
 import com.example.polinelapeduli.utils.Enum.EStatus;
 
@@ -74,11 +73,6 @@ public class DonationRepository {
         return donations;
     }
 
-    /**
-     * Retrieves all donation details including category and total collected amount.
-     *
-     * @return A map where the key is the category name and the value is a list of donation details.
-     */
     /**
      * Retrieves donation details filtered by category.
      *
@@ -289,8 +283,8 @@ public class DonationRepository {
      *
      * @return A list of donations with all relevant report details.
      */
-    public List<ReportDonation> getAllReportDonations() {
-        List<ReportDonation> donations = new ArrayList<>();
+    public List<Donation> getAllReportDonations() {
+        List<Donation> donations = new ArrayList<>();
         String query = "SELECT d." + DatabaseHelper.COLUMN_NAME + " AS nama_donasi, " +
                 "c." + DatabaseHelper.COLUMN_NAME + " AS nama_kategori, " +
                 "IFNULL(SUM(t." + DatabaseHelper.COLUMN_AMOUNT + "), 0) AS jumlah_donasi, " +
@@ -307,7 +301,7 @@ public class DonationRepository {
 
             while (cursor.moveToNext()) {
                 // Corrected line: instantiating ReportDonation, not Donation
-                ReportDonation donation = new ReportDonation(
+                Donation donation = new Donation(
                         cursor.getString(cursor.getColumnIndexOrThrow("nama_donasi")),
                         cursor.getString(cursor.getColumnIndexOrThrow("nama_kategori")),
                         cursor.getInt(cursor.getColumnIndexOrThrow("jumlah_donasi")),
@@ -316,10 +310,10 @@ public class DonationRepository {
 
                 // Log for debugging (optional)
                 Log.d(TAG, "Donation Report: " +
-                        "\nName: " + donation.getDonationName() +
-                        "\nCategory: " + donation.getCategory() +
-                        "\nTotal Collected: " + donation.getAmount() +
-                        "\nTarget: " + donation.getTargetAmount()
+                        "\nName: " + donation.getName() +
+                        "\nCategory: " + donation.getCategoryName() +
+                        "\nTotal Collected: " + donation.getTotalCollected() +
+                        "\nTarget: " + donation.getTarget()
                 );
 
                 donations.add(donation);

@@ -10,16 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.polinelapeduli.R;
-import com.example.polinelapeduli.model.dto.HistoryTransaction;
+import com.example.polinelapeduli.model.Payment;
 import com.example.polinelapeduli.utils.CurrencyFormatter;
 
 import java.util.List;
 
-public class RiwayatDonasiAdapter extends ArrayAdapter<HistoryTransaction> {
+public class RiwayatDonasiAdapter extends ArrayAdapter<Payment> {
 
     private final Context context;
 
-    public RiwayatDonasiAdapter(Context context, List<HistoryTransaction> transactions) {
+    public RiwayatDonasiAdapter(Context context, List<Payment> transactions) {
         super(context, 0, transactions);
         this.context = context;
     }
@@ -31,7 +31,7 @@ public class RiwayatDonasiAdapter extends ArrayAdapter<HistoryTransaction> {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item_riwayat_transaksi, parent, false);
         }
 
-        HistoryTransaction transaction = getItem(position);
+        Payment transaction = getItem(position);
 
         TextView tvDonasiName = convertView.findViewById(R.id.tv_donasi_name);
         TextView tvDonasiDetails = convertView.findViewById(R.id.tv_donasi_details);
@@ -43,7 +43,7 @@ public class RiwayatDonasiAdapter extends ArrayAdapter<HistoryTransaction> {
                 transaction.getCategoryName(),
                 transaction.getMethod(),
                 transaction.getPaidAt()));
-        tvDonasiAmount.setText(CurrencyFormatter.formatCurrency(transaction.getPaymentAmount()));
+        tvDonasiAmount.setText(CurrencyFormatter.formatCurrency(transaction.getAmount()));
 
         return convertView;
     }

@@ -33,6 +33,13 @@ public class Donation {
         this.updatedAt = updatedAt;
     }
 
+    public Donation(String name, String categoryName, int target, int totalCollected){
+        this.name = name;
+        this.categoryName = categoryName;
+        this.target = target;
+        this.totalCollected = totalCollected;
+    }
+
     public Donation(int donationId, String name, String description, int target, String status, int totalCollected) {
         this.donationId = donationId;
         this.name = name;

@@ -1,12 +1,13 @@
 package com.example.polinelapeduli.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.polinelapeduli.R;
-import com.example.polinelapeduli.model.dto.ReportDonation;
+import com.example.polinelapeduli.model.Donation;
 import com.example.polinelapeduli.repository.DonationRepository;
 
 import java.util.ArrayList;
@@ -33,14 +34,22 @@ public class LaporanDonasiActivity extends AppCompatActivity {
 
     private void loadLaporanDonasi() {
         laporanDonasiList.clear();
-        List<ReportDonation> donations = donationRepository.getAllReportDonations();
+        List<Donation> donations = donationRepository.getAllReportDonations();
+        for (Donation donation : donations) {
+            Log.d("LaporanDonasiActivity", "Donation Report: " +
+                    "\nName: " + donation.getName() +
+                    "\nCategory: " + donation.getCategoryName() +
+                    "\nTotal Collected: " + donation.getTotalCollected() +
+                    "\nTarget: " + donation.getTarget()
+            );
 
-        if (donations.isEmpty()) {
-            laporanDonasiList.add("Belum ada laporan donasi.");
-        } else {
-            // Using the custom adapter
-            LaporanDonasiAdapter adapter = new LaporanDonasiAdapter(this, donations);
-            listViewLaporanDonasi.setAdapter(adapter);
+            if (donations.isEmpty()) {
+                laporanDonasiList.add("Belum ada laporan donasi.");
+            } else {
+                // Using the custom adapter
+                LaporanDonasiAdapter adapter = new LaporanDonasiAdapter(this, donations);
+                listViewLaporanDonasi.setAdapter(adapter);
+            }
         }
     }
 }
