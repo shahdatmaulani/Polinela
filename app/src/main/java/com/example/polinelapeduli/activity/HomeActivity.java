@@ -2,10 +2,7 @@ package com.example.polinelapeduli.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,7 +17,6 @@ import com.google.android.material.navigation.NavigationBarView;
 public class HomeActivity extends AppCompatActivity {
     private String role;
     private TextView headerWelcome;
-    private EditText searchField;
     private BottomNavigationView bottomNavigationView;
     private LinearLayout kategoriBencana, kategoriPendidikan, kategoriKesehatan, kategoriKemanusiaan;
 
@@ -37,7 +33,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // View Initialization
         headerWelcome = findViewById(R.id.headerWelcome);
-        searchField = findViewById(R.id.searchField);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         kategoriBencana = findViewById(R.id.kategoriBencana);
@@ -47,7 +42,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Setup
         setupUserDetails(userLogin);
-        setupSearchField();
         setupCategoryListeners();
         setupBottomNavigation();
     }
@@ -72,21 +66,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setHeaderWelcome(String fullName) {
         headerWelcome.setText(String.format("Welcome%s!", fullName != null ? ", " + fullName : ""));
-    }
-
-    private void setupSearchField() {
-        searchField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // Handle search functionality here
-            }
-        });
     }
 
     private void setupCategoryListeners() {

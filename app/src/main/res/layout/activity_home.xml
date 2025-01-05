@@ -16,53 +16,10 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/search_field_backgroud"
-        android:padding="0dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/headerWelcome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.85">
-
-        <!-- Icon Pencarian -->
-        <ImageView
-            android:id="@+id/searchIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/pic12"
-            android:contentDescription="Search Icon"
-            android:layout_gravity="center_vertical" />
-
-        <!-- Kolom Pencarian -->
-        <EditText
-            android:id="@+id/searchField"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Cari Donasi..."
-            android:paddingStart="8dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:minHeight="48dp"
-            android:inputType="text"
-            android:background="@android:color/transparent"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:maxLines="1" />
-
-    </LinearLayout>
-
 
     <!-- Banner  -->
     <ImageView
@@ -71,7 +28,7 @@
         android:layout_height="200dp"
         android:src="@drawable/pic1"
         android:scaleType="centerCrop"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="25dp"
         android:contentDescription="Banner Kampanye"
         app:layout_constraintTop_toBottomOf="@id/headerWelcome"
         app:layout_constraintStart_toStartOf="parent"
