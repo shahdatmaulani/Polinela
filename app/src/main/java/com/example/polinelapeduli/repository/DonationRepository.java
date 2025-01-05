@@ -215,7 +215,7 @@ public class DonationRepository {
      * @param imagePath   The image path for the donation.
      * @return True if the update is successful, false otherwise.
      */
-    public boolean updateDonation(String name, String description, int target, String status, String imagePath) {
+    public boolean updateDonation(int idDonation, String name, String description, int target, String status, String imagePath) {
         try (SQLiteDatabase database = dbHelper.getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(DatabaseHelper.COLUMN_NAME, name);
@@ -226,8 +226,8 @@ public class DonationRepository {
             values.put(DatabaseHelper.COLUMN_UPDATED_AT, CurrentTime.getCurrentTime());
 
             int rowsAffected = database.update(DatabaseHelper.TABLE_DONATIONS, values,
-                    DatabaseHelper.COLUMN_NAME + " = ?",
-                    new String[]{name});
+                    DatabaseHelper.COLUMN_DONATION_ID + " = ?",
+                    new String[]{String.valueOf(idDonation)});
             return rowsAffected > 0;
         } catch (Exception e) {
             Log.e(TAG, "Error updating donation: ", e);

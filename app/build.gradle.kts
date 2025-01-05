@@ -42,9 +42,6 @@ android {
 
 dependencies {
 
-    //Font Style
-    implementation ("androidx.core:core:1.12.0")
-
     // Firebase Authentication
     implementation("com.google.firebase:firebase-auth:23.0.0")
 

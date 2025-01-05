@@ -93,6 +93,13 @@ public class EditDonasiActivity extends AppCompatActivity {
         );
     }
 
+    private int getIdDonation(){
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("idDonation", -1);
+        Log.d("EditDonasiActivity", "Received data: " + id);
+        return id;
+    }
+
     private void setupStatusSpinner() {
         String[] statuses = {"AKTIF", "KOMPLET", "DITUTUP"};
 
@@ -110,7 +117,7 @@ public class EditDonasiActivity extends AppCompatActivity {
         int id = intent.getIntExtra("idDonation", -1);
         Log.d("EditDonasiActivity", "Received data: " + id);
 
-        Donation donation = donationRepository.getDonationById(id);
+        Donation donation = donationRepository.getDonationById(getIdDonation());
         if (donation != null) {
             etNamaDonasi.setText(donation.getName());
             etDeskripsiDonasi.setText(donation.getDescription());
@@ -159,7 +166,7 @@ public class EditDonasiActivity extends AppCompatActivity {
 
         String selectedStatus = spinnerStatusDonation.getSelectedItem().toString();
 
-        boolean isUpdated = donationRepository.updateDonation(
+        boolean isUpdated = donationRepository.updateDonation(getIdDonation(),
                 nama, deskripsi, target, selectedStatus, imagePath
         );
 
