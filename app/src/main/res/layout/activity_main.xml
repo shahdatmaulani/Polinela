@@ -85,41 +85,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome to"
-        android:textSize="36sp"
+        android:textSize="40sp"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/open_sans_bold"
         android:shadowColor="#FF000000"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="3"
         android:letterSpacing="0.1"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="16dp" />
+        android:layout_marginTop="15dp" />
 
     <!-- Text "PolinelaPeduli" with Improved Style -->
+
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/polinelaText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PolinelaPeduli"
-        android:textSize="40sp"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="0dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:letterSpacing="0.15"
         android:shadowColor="#FF000000"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="4"
-        android:letterSpacing="0.15"
-        android:layout_marginTop="0dp"
-        android:layout_marginStart="16dp" />
+        android:text="PolinelaPeduli"
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
-    <!-- Subtitle -->
     <TextView
         android:id="@+id/subtitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_regular"
         android:text="Bergabunglah dalam misi untuk menolong sesama"
         android:textSize="16sp"
         android:textColor="@android:color/white"
